@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "app",#uplode 1 image with text
-   
+    'app1', #uplode multy images
 ]
 
 MIDDLEWARE = [

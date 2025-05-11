@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% block app %} 
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="formFile" class="form-label"> app1-Upload Files Here</label>
+    {{form}}
+  </div>
+    <button type="submit" class="btn btn-outline-primary flex-fill">Submit</button>
+
+</form>
+
+
+</div>
+{% endblock %} {% block content %}
+ <!-- {% for image in images %}
+ <div class="card m-2" style="width: 18rem">
+  <img src="{{image.pic.url}}" class="card-img-top" alt="..." />
+  <div class="card-body">
+   
+    <p class="card-text">
+      Some quick example text to build on the card title and make up the bulk of
+      the card’s content. Some quick example text to build on the card title and
+      make up the bulk of the card’s content.
+    </p>
+  </div>
+</div> 
+{% endfor %}   -->
+
+{% for image in images %}
+<div class="card col-md-4 m-2" style="width: 18rem">
+  <img src="{{image.pic.url}}" class="card-img-top" alt="..." />
+   <div class="card-body">
+           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div> 
+</div> 
+{% endfor %}  
+
+{% endblock %}
