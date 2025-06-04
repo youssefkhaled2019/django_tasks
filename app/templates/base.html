@@ -92,6 +92,7 @@
                     >app1</a
                   >
                 </li>
+
                 <li>
                   <a
                     class="dropdown-item bg-light"
@@ -161,14 +162,27 @@
                 app3
               </button>
               <ul class="dropdown-menu bg-light">
-                <li><a class="dropdown-item bg-light" href="#">Action</a></li>
                 <li>
-                  <a class="dropdown-item bg-light" href="#">Another action</a>
+                  <a class="dropdown-item bg-light" href="{% url 'app3' %}"
+                    >app3</a
+                  >
                 </li>
                 <li>
-                  <a class="dropdown-item bg-light" href="#"
-                    >Something else here</a
+                  <a
+                    class="dropdown-item bg-light"
+                    href="{% url 'app3_index1' %}"
+                    >app3_index1</a
                   >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item bg-light"
+                    href="{% url 'app3_File_Uploads' %}"
+                    >upload</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item bg-light" href="#">...</a>
                 </li>
               </ul>
             </div>
