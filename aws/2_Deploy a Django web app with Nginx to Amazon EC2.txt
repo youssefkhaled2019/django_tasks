@@ -1,0 +1,172 @@
+sudo ufw app list
+sudo ufw allow OpenSSH
+sudo ufw enable
+sudo ufw status
+------------------
+sudo apt update
+sudo apt install python3-venv python3-dev libpq-dev postgresql postgresql-contrib nginx curl virtualenv
+------------------
+sudo -u postgres psql
+CREATE DATABASE aws_test;    #<------------------
+CREATE USER admin WITH PASSWORD 'password';
+ALTER ROLE admin SET client_encoding TO 'utf8';
+ALTER ROLE admin SET default_transaction_isolation TO 'read committed';
+ALTER ROLE admin SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE aws_test TO admin; #<------------------
+\q
+
+------------------
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'aws_test',
+        'USER': 'admin',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': ''
+    }
+}
+------------------
+git clone https://github.com/youssefkhaled2019/aws_test.git
+cd aws_test
+virtualenv env
+source env/bin/activate
+pip install -r requirements.txt
+pip install django gunicorn psycopg2-binary django-crispy-forms django-tinymce crispy-bootstrap5
+------------------
+ALLOWED_HOSTS = ['3.208.8.155','localhost']
+------------------
+git pull
+------------------
+python3 manage.py makemigrations
+python3 manage.py migrate
+python3 manage.py createsuperuser 
+#python3 manage.py collectstatic
+--------[proplem-and-solve]-----------
+sudo -u postgres psql
+ALTER DATABASE aws_test OWNER TO admin;
+\q
+-------------------
+sudo ufw  allow 8000
+python3 manage.py runserver 0.0.0.0:8000
+deactivate
+-------------------
+sudo nano /etc/systemd/system/gunicorn.socket
+----------------------------------------
+[Unit]
+Description=gunicorn socket
+
+[Socket]
+ListenStream=/run/gunicorn.sock
+
+[Install]
+WantedBy=sockets.target
+--------------------------------
+sudo nano /etc/systemd/system/gunicorn.service
+--------------------------------
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/aws_test            <-----------------
+ExecStart=/home/ubuntu/aws_test/env/bin/gunicorn \         <-----------------
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/gunicorn.sock \
+          main.wsgi:application                  <-----------------
+
+[Install]
+WantedBy=multi-user.target
+---------------------------------
+sudo systemctl start gunicorn.socket
+sudo systemctl enable gunicorn.socket
+sudo systemctl status gunicorn.socket    # active ( listening)
+file /run/gunicorn.sock
+sudo journalctl -u gunicorn.socket
+---------------------------------
+#sudo systemctl restart guntcorn
+---------------------------------
+sudo systemctl status gunicorn            #inactive (dead)
+curl --unix-socket /run/gunicorn.sock localhost
+---------------------------------
+sudo systemctl daemon-reload
+sudo systemctl restart guntcorn
+.....
+---------------------------------
+sudo nano /etc/nginx/sites-available/aws_test                    #<-----------------------
+---------------------------------
+server {
+    listen 80;
+    server_name 3.208.8.155;
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /home/ubuntu/aws_test;                   
+    }
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/gunicorn.sock;
+    }
+}
+---------------------------------
+sudo ln -s /etc/nginx/sites-available/aws_test /etc/nginx/sites-enabled  #<-----------------------
+sudo nginx -t
+sudo systemctl restart nginx
+sudo ufw delete allow 8000
+sudo ufw allow 'Nginx Full'
+sudo nano /etc/nginx/nginx.conf   #solve problem admin
+--------------------------------
+user root; #<---------------
+--------------------------------
+sudo systemctl restart nginx
+
+
+
+
+
+
+
+-----------------help-----------------------------
+
+
+https://stackoverflow.com/questions/40711747/failed-to-start-gunicorn-service-unit-gunicorn-service-not-found
+
+
+
+--------------------------------------------------
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/aws_test            
+ExecStart=/home/ubuntu/aws_test/env/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/gunicorn.sock main.wsgi:application                  
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+--------------------------------------------------
+
+cd /home/ubuntu/aws_test/
+
+
+server {
+    listen 80;
+    server_name 3.208.8.155;
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /home/ubuntu/aws_test/main;                    
+    }
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/gunicorn.sock;
+    }
+}

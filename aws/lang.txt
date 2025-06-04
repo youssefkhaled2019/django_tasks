@@ -1,0 +1,42 @@
+      <form action="{% url 'set_language' %}" method="post">
+              {% csrf_token %} {% get_current_language as LANGUAGE_CODE %}
+              <input
+                name="next"
+                type="hidden"
+                value="{{ request.get_full_path|slice:'3:' }}"
+              />
+              {% if LANGUAGE_CODE == 'ar' %}
+              <div class="border">
+                <!-- <i class="fa fa-language" aria-hidden="true"></i> -->
+                <button
+                  type="submit"
+                  name="language"
+                  value="en"
+                  class="nav-link m-1"
+                >
+                  <span class="label"></span>English
+                </button>
+              </div>
+              {% else %}
+              <div class="border">
+                <!-- <i class="fa fa-language" aria-hidden="true"></i> -->
+                <button
+                  type="submit"
+                  name="language"
+                  value="ar"
+                  class="nav-link m-1"
+                >
+                  <span class="label"></span>عربي
+                </button>
+              </div>
+              {% endif %}
+            </form>
+
+
+
+---------------------------------
+
+{% trans 'word'  %}
+>>> python manage.py makemessages -l ar
+python manage.py compilemessages -l ar
+---------------------------------     

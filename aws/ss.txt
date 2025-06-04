@@ -1,0 +1,10 @@
+https://gist.github.com/LD8/c8eea6f494be8dee82810bf34a1a840a
+https://www.youtube.com/watch?v=PzSUOyshA6k
+----------------------------
+
+sudo certbot --nginx -d 3.208.8.155
+
+--------------------------------
+
+
+--------------------------------
