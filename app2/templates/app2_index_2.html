@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% load static %}{% block app %} app2
+
+<div>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+      {{ form2 }}
+      
+      <label for="formFile" class="form-label mt-2">Upload Files Here</label>
+
+   
+
+      {{form }}
+    </div>
+    <button type="submit" class="btn btn-outline-primary">Submit</button>
+  </form>
+</div>
+
+{% endblock %} {% block content %}
+
+<div>
+  {% for i,k in data.items %}
+  <h1>{{i.title}}</h1>
+
+  {% for j in k %}
+  <img src="{{j.pic.url}}" alt="..." height="400" width="400" />
+  {% endfor %} {% endfor %}
+  <hr />
+  <!-- <div class="card col-md-4" style="width: 18rem;">
+        <img src="{{image.pic.url}}" class="card-img-top" alt="...">
+        <div class="card-body">
+           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div> -->
+</div>
+
+{% endblock %}

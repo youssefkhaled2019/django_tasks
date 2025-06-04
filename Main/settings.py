@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "app",#uplode 1 image with text
-    'app1', #uplode multy images
+    'app1', #uplode multy images from form 
+    'app2', #uplode multy images in two tables Foreignkey
 ]
 
 MIDDLEWARE = [
