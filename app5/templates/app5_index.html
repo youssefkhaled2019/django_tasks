@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block app %} App5{% endblock %} {% block content %}
+{% load static %}
+<div class="">
+  {% for i in data %}
+  <h1>{{i.title}}</h1>
+
+  {% for j in i.data.all %} {% if j.type == 1 %}
+  <video width="400" controls>
+    <source src="{{j.name_file.url}}" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+  {% else %}
+  <img src="{{j.name_file.url}}" alt="..." height="400" width="400" />
+
+  {% endif %} {% endfor %} {% endfor %}
+  <hr />
+  <!-- <div class="card col-md-4" style="width: 18rem;">
+        <img src="{{image.pic.url}}" class="card-img-top" alt="...">
+        <div class="card-body">
+           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div> -->
+</div>
+{% endblock %}
+
+<!--       {% for i,k in data.items %}
+      <h1>{{i.title}}</h1>
+
+      {% for j in k %}
+       {% if j.type == 1 %}
+      <video width="400" controls>
+        <source src="{{j.name_file.url}}" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      {% else %}
+      <img src="{{j.name_file.url}}" alt="..." height="400" width="400" />
+
+      {% endif %} 
+      {% endfor %} 
+      {% endfor %} -->

@@ -237,9 +237,24 @@
                 app5
               </button>
               <ul class="dropdown-menu bg-light">
-                <li><a class="dropdown-item bg-light" href="#">Action</a></li>
                 <li>
-                  <a class="dropdown-item bg-light" href="#">Another action</a>
+                  <a class="dropdown-item bg-light" href="{% url 'app5' %}"
+                    >app5</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item bg-light"
+                    href="{% url 'app5_index1' %}"
+                    >app5_index1</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item bg-light"
+                    href="{% url 'app5_File_Uploads' %}"
+                    >upload</a
+                  >
                 </li>
                 <li>
                   <a class="dropdown-item bg-light" href="#"

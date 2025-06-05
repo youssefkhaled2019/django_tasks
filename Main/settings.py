@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'app2', #uplode multy images in two tables Foreignkey
     'app3', #uplode multy images and videos  in two tables 
     'app4', #uplode multy images and videos  in two tables and  add image and videos  in  folder_content data as   1bd25tqRNVjLzr4x/*.jpg
+    'app5', #uplode multy images and videos  in two tables and  add image and videos  in  folder_content data as   1bd25tqRNVjLzr4x/*.jpg with update or delete
 ]
 
 MIDDLEWARE = [
