@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class AppConfig(AppConfig):
+class ImagePdfCrudConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'app'
+    name = 'image_pdf_crud'
